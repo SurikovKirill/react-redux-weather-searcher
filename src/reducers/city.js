@@ -7,10 +7,12 @@ const initialState = {
 export function cityReducer(state = initialState, action) {
     switch (action.type) {
         case 'CITY_LOADING': {
-            const { isLoading } = action.payload;
+            const { isLoading, error, weather } = action.payload;
             return {
                 ...state,
                 isLoading,
+                error,
+                weather,
             };
         }
         case 'CITY_LOADING_SUCCESS': {
@@ -23,11 +25,12 @@ export function cityReducer(state = initialState, action) {
             };
         }
         case 'CITY_LOADING_ERROR': {
-            const { isLoading, error } = action.payload;
+            const { isLoading, error, weather } = action.payload;
             return {
                 ...state,
                 isLoading,
                 error,
+                weather,
             };
         }
         default: {

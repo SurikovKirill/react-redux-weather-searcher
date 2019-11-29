@@ -24,30 +24,37 @@ export default class WeatherHandler {
 
     static async getWeatherByLocation(location) {
         let response  = await fetch(`${url}?lat=${location.lat}&lon=${location.lon}&APPID=${APIkey}`);
-        console.log(response);        
+        return WeatherHandler.parseWeatherData(response);
+    }
+
+    static async getWeatherByCityName(name) {
+        let response = await fetch(`${url}?q=${name}&APPID=${APIkey}`);
         return WeatherHandler.parseWeatherData(response);
     }
 
     static parseWeatherData = async (response) => {
-        if (!(response.ok)) {
+        if (response.ok) {
+            let data = await response.json();
             return ({
-                weather: {},
-                error: response.ok,
+                weather : {
+                    name: data.name,
+                    img: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png",
+                    temperature: (data.main.temp - 273.15).toFixed(0) + '°C',
+                    pressure: data.main.pressure + ' hpa',
+                    humidity: data.main.humidity + ' %',
+                    wind: data.wind.speed + ' m/s',
+                    cloudiness: data.weather[0].description,
+                    location: '[' + data.coord.lat + ',' + data.coord.lon + ']',
+                },
+                done: response.ok,
             });
         }
-        let data = await response.json();
-        return ({
-            weather : {
-            name: data.name,
-            img: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png",
-            temperature: (data.main.temp - 273.15).toFixed(0) + '°C',
-            wind: data.wind.speed + ' m/s',
-            cloudiness: data.weather[0].description,
-            pressure: data.main.pressure + ' hpa',
-            humidity: data.main.humidity + ' %',
-            location: '[' + data.coord.lat + ',' + data.coord.lon + ']',
-            },
-            error: response.ok,
-        });
+        else {
+            return ({
+                weather: {},
+                done: response.ok,
+            });
+        }
+        
     }
 }

@@ -1,14 +1,10 @@
 import WeatherHandler from './WeatherHandler';
 
-
-
 export function initWeather() {
     return async (dispatch) => {
         dispatch(loadingStart());
-        const { weather, error } = await WeatherHandler.geolocationWeather();
-        console.log(weather);
-        console.log(error);
-        if (error) {
+        const { weather, done } = await WeatherHandler.geolocationWeather();
+        if (done) {
             dispatch(loadingSuccess(weather));
         } else {
             dispatch(loadingError());
@@ -19,7 +15,11 @@ export function initWeather() {
 export function loadingStart() {
     return ({
         type: 'CITY_LOADING' ,
-        payload: { isLoading: true }
+        payload: { 
+            isLoading: true,
+            error: false,
+            weather: {}
+        }
     });
 }
 
@@ -38,7 +38,8 @@ export function loadingError() {
         type: 'CITY_LOADING_ERROR',
         payload: { 
             isLoading: false, 
-            error: true 
+            error: true, 
+            weather: {} 
         }
     });
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import '../containers/App.css';
-import * as PropTypes from 'prop-types';
 
 const WeatherInfo = ({ weather }) => (
     !!weather ? (
@@ -29,9 +28,5 @@ const WeatherInfo = ({ weather }) => (
         ) :
         null
 );
-
-WeatherInfo.propTypes = {
-    weather: PropTypes.object
-};
 
 export default WeatherInfo;
