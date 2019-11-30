@@ -17,10 +17,6 @@ class FavouritesContainer extends Component {
     };
 
     render() {
-        console.log("FavContainer");
-        console.log(this.props.cities);
-        console.log(this.props.isLoading);
-        console.log(this.props.errors);
         return (
             <>
                 <Search onSubmit={this.handleSubmit} />

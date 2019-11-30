@@ -23,7 +23,6 @@ export default class WeatherHandler {
     };
 
     static async getWeatherByLocation(location) {
-        console.log(`${url}?lat=${location.lat}&lon=${location.lon}&APPID=${APIkey}`);
         let response  = await fetch(`${url}?lat=${location.lat}&lon=${location.lon}&APPID=${APIkey}`);
         return WeatherHandler.parseWeatherData(response);
     }

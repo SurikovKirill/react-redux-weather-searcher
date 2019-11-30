@@ -13,6 +13,7 @@ export function initCities() {
             dispatch(addNewCityLoading(localStorageCity, true));
             dispatch(addNewCity({name: localStorageCity}));
             const { weather, done } = await WeatherHandler.getWeatherByCityName(localStorageCity);
+            console.log(weather.name);
             if (done) {
                 dispatch(updateCity(weather));
                 dispatch(addNewCityLoading(localStorageCity, false));
@@ -28,6 +29,7 @@ export function addNewCityAsync(newCity) {
     return async (dispatch) => {
         let tmp = localStorage.getItem('cities');
         tmp = JSON.parse(tmp);
+        newCity = newCity.toLowerCase();
         if (tmp === null){
             tmp = [];
         }
@@ -40,7 +42,6 @@ export function addNewCityAsync(newCity) {
             dispatch(addNewCity({name: newCity}))
             const { weather, done } = await WeatherHandler.getWeatherByCityName(newCity);
             if (done) {
-                //dispatch(addNewCity(weather));
                 tmp.push(newCity);
                 localStorage.setItem('cities', JSON.stringify(tmp));
                 dispatch(updateCity(weather));
@@ -50,7 +51,6 @@ export function addNewCityAsync(newCity) {
                 tmp.push(newCity);
                 localStorage.setItem('cities', JSON.stringify(tmp));
                 dispatch(loadingError(newCity));
-                //dispatch(addNewCityLoading(newCity, false)); 
             }
         }
     };
