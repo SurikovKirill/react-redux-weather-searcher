@@ -10,21 +10,24 @@ const FavouritesList = ({ cities, isLoading , errors, onRemove}) => (
         {
             cities.map((city) => (
                 <div key={city.name} className={'FavouriteCity'}>
+                    {console.log("Debug FavList")}
+                    {console.log(city.name)}
+                    {console.log(city)}
                     <FavouriteCityHeader onRemove={onRemove} city={city}/>
-                    {}
-                    { (!errors.includes(city.name)) ? ((!isLoading.includes(city.name) ? <WeatherInfo weather={city}/> : <Loader/>)) : <Error/>}
+                    {/* {console.log(errors.includes(city.name))}
+                    {console.log(isLoading.includes(city.name))} */}
+                    { (!errors.includes(city.name)) ? (((!isLoading.includes(city.name) && !cities.includes(city.name)) ? <WeatherInfo weather={city}/> : <Loader/>)) : <Error/>}
                 </div>
             ))
         }
     </div>
 );
 
-FavouritesList.defaultProps = {
-    cities: [],
-    isLoading: [],
-    errors: [],
-    onRemove: f => f
-};
-
+// FavouritesList.defaultProps = {
+//     cities: [],
+//     isLoading: [],
+//     errors: [],
+//     onRemove: f => f
+// };
 
 export default FavouritesList;

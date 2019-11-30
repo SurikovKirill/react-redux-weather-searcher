@@ -28,7 +28,7 @@ export default class WeatherHandler {
     }
 
     static async getWeatherByCityName(name) {
-        let response = await fetch(`${url}?q=${name}&APPID=${APIkey}`);
+        let response = await fetch(`${url}?q=${name}&APPID=${APIkey}`).catch();
         return WeatherHandler.parseWeatherData(response);
     }
 

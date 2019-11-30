@@ -11,13 +11,15 @@ export function initCities() {
         }
         cities.map(async localStorageCity => {
             dispatch(addNewCityLoading(localStorageCity, true));
+            dispatch(addNewCity({name: localStorageCity}));
             const { weather, done } = await WeatherHandler.getWeatherByCityName(localStorageCity);
             if (done) {
-                dispatch(addNewCity(weather));
+                dispatch(updateCity(weather));
+                dispatch(addNewCityLoading(localStorageCity, false));
             } else {
                 dispatch(loadingError(localStorageCity));
             }
-            dispatch(addNewCityLoading(localStorageCity, false));
+            
         });
     };
 }
@@ -35,15 +37,20 @@ export function addNewCityAsync(newCity) {
         }
         else{
             dispatch(addNewCityLoading(newCity, true));
+            dispatch(addNewCity({name: newCity}))
             const { weather, done } = await WeatherHandler.getWeatherByCityName(newCity);
             if (done) {
-                dispatch(addNewCity(weather));
+                //dispatch(addNewCity(weather));
                 tmp.push(newCity);
                 localStorage.setItem('cities', JSON.stringify(tmp));
+                dispatch(updateCity(weather));
                 dispatch(addNewCityLoading(newCity, false));  
             } 
             else {
+                tmp.push(newCity);
+                localStorage.setItem('cities', JSON.stringify(tmp));
                 dispatch(loadingError(newCity));
+                //dispatch(addNewCityLoading(newCity, false)); 
             }
         }
     };
@@ -67,19 +74,26 @@ export function removeCity(name) {
     });
 }
 
+export function updateCity(city) {
+    return ({
+        type: 'UPDATE_CITY', 
+        payload: {city} 
+    });
+}
+
 export function addNewCityLoading(name, isLoading) {
-    return {
+    return ({
         type: 'ADD_NEW_CITY_LOADING',
         payload: {
             name,
             isLoading
         }
-    };
+    });
 }
 
 export function loadingError(name) {
-    return {
+    return ({
         type: 'LOADING_ERROR',
         payload: {name}
-    }
+    });
 }

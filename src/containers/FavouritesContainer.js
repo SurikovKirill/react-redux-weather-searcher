@@ -12,11 +12,15 @@ class FavouritesContainer extends Component {
         e.target[0].value = '';
     };
 
-    handleRemove = (id) => {
-        this.props.removeCity(id);
+    handleRemove = (name) => {
+        this.props.removeCity(name);
     };
 
     render() {
+        console.log("FavContainer");
+        console.log(this.props.cities);
+        console.log(this.props.isLoading);
+        console.log(this.props.errors);
         return (
             <>
                 <Search onSubmit={this.handleSubmit} />
