@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavouriteCityHeader component matches the snapshot when city.icon != null, city.temperature != null 1`] = `
+<div
+  className="favCityHeader"
+>
+  <h1>
+    Moscow
+  </h1>
+  <img
+    alt="Иконка погоды"
+    src="i"
+  />
+  <h1>
+    t
+  </h1>
+  <button
+    className="deleteButton"
+    onClick={[Function]}
+  >
+    X
+  </button>
+</div>
+`;
+
+exports[`FavouriteCityHeader component matches the snapshot when city.icon == null, city.temperature == null 1`] = `
+<div
+  className="favCityHeader"
+>
+  <h1>
+    Moscow
+  </h1>
+  <button
+    className="deleteButton"
+    onClick={[Function]}
+  >
+    X
+  </button>
+</div>
+`;
